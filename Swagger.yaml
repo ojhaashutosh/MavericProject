@@ -1,0 +1,242 @@
+openapi: 3.0.1
+info:
+title: OpenAPI definition
+version: v0
+servers:
+  - url: http://localhost:8080
+description: Generated server url
+paths:
+/signUp:
+post:
+tags:
+  - consumer-controller
+operationId: signUp
+responses:
+"200":
+description: OK
+/registerNewCustomer:
+post:
+tags:
+  - customer-controller
+operationId: registerNewCustomer
+requestBody:
+content:
+application/json:
+schema:
+$ref: '#/components/schemas/User'
+required: true
+responses:
+"200":
+description: OK
+content:
+'*/*':
+schema:
+$ref: '#/components/schemas/User'
+/login:
+post:
+tags:
+  - consumer-controller
+operationId: login
+responses:
+"200":
+description: OK
+/createTrans:
+post:
+tags:
+  - transaction-controller
+operationId: createTransaction
+responses:
+"200":
+description: OK
+/createBalance/{id}:
+post:
+tags:
+  - balance-controller
+operationId: createBalance
+responses:
+"200":
+description: OK
+/createAcc:
+post:
+tags:
+  - account-conrtoller
+operationId: createAcc
+responses:
+"200":
+description: OK
+content:
+'*/*':
+schema:
+$ref: '#/components/schemas/CurrentAccount'
+/updateUserDetails:
+patch:
+tags:
+  - consumer-controller
+operationId: updateDetails
+responses:
+"200":
+description: OK
+/updateTrans/{id}:
+patch:
+tags:
+  - transaction-controller
+operationId: UpdateTrans
+responses:
+"200":
+description: OK
+/updateBalance/{id}:
+patch:
+tags:
+  - balance-controller
+operationId: UpdateBalance
+responses:
+"200":
+description: OK
+/updateAccDetails/{id}:
+patch:
+tags:
+  - account-conrtoller
+operationId: updateAcc
+responses:
+"200":
+description: OK
+content:
+'*/*':
+schema:
+$ref: '#/components/schemas/User'
+/accStatus/{accountId}:
+patch:
+tags:
+  - admin-controller
+operationId: accStatus
+responses:
+"200":
+description: OK
+/viewTrans/{id}:
+get:
+tags:
+  - transaction-controller
+operationId: viewTrans
+responses:
+"200":
+description: OK
+/viewBalanceby/{id}:
+get:
+tags:
+  - balance-controller
+operationId: viewBalance
+responses:
+"200":
+description: OK
+/viewAccDetails/{id}:
+get:
+tags:
+  - account-conrtoller
+operationId: viewAcc
+responses:
+"200":
+description: OK
+content:
+'*/*':
+schema:
+$ref: '#/components/schemas/User'
+/users/{id}:
+get:
+tags:
+  - customer-controller
+operationId: getById
+parameters:
+  - name: id
+in: path
+required: true
+schema:
+type: integer
+format: int32
+responses:
+"200":
+description: OK
+content:
+'*/*':
+schema:
+$ref: '#/components/schemas/User'
+/signout:
+get:
+tags:
+  - consumer-controller
+operationId: singOut
+responses:
+"200":
+description: OK
+/getUser/{Accountid}:
+get:
+tags:
+  - admin-controller
+operationId: getDetails
+responses:
+"200":
+description: OK
+/getAllUsers:
+get:
+tags:
+  - admin-controller
+operationId: getAllUsers
+responses:
+"200":
+description: OK
+components:
+schemas:
+CurrentAccount:
+type: object
+properties:
+id:
+type: integer
+format: int32
+balance:
+type: number
+format: double
+account_number:
+type: integer
+format: int32
+SavingsAccount:
+type: object
+properties:
+id:
+type: integer
+format: int32
+balance:
+type: number
+format: double
+account_number:
+type: integer
+format: int32
+User:
+type: object
+properties:
+user_id:
+type: integer
+format: int32
+aadhar_id:
+type: string
+enabled:
+type: string
+format: byte
+first_Name:
+type: string
+last_Name:
+type: string
+password:
+type: string
+phone:
+type: string
+username:
+type: string
+savingsAccount:
+$ref: '#/components/schemas/SavingsAccount'
+currentAccount:
+$ref: '#/components/schemas/CurrentAccount'
+savingsAccountId:
+type: integer
+format: int32
+currentAccountId:
+type: integer
+format: int32

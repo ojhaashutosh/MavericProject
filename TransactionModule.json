@@ -1,0 +1,128 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Balance Module",
+    "description": "creating swagger.json for project",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/createTransaction": {
+      "post": {
+        "description": "to create transaction request",
+        "responses": {
+          "200": {
+            "description": "successfully created transaction request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "Savings acc balance": {
+                        "type": "number"
+                      },
+                      "Current acc balance": {
+                        "type": "number"
+                      },
+                      "account number": {
+                        "type": "number"
+                      },
+                      "type of transaction": {
+                        "type": "string"
+                      },
+                      "Amount":{
+                        "type": "number"
+                      }
+                      },
+                    "example": {
+                      "id": 1,
+                      "account number": "123456987",
+                      "Savings acc balance": "10000",
+                      "Current acc balance": "00",
+                      "type of transaction": "debit",
+                      "Amount": "500"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/updateAccountAfterTran/{user_id}": {
+      "patch": {
+        "description": "update account balance by id",
+        "responses": {
+          "200": {
+            "description": "Updated account balance by id"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "int",
+            "format": "int",
+            "$ref": ""
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array"
+            },
+            "example": {
+              "id": 1,
+              "account number": "123456987",
+              "Savings acc balance": "10000",
+              "Current acc balance": "00",
+              "Updated balance": "9500"
+            },
+            "$ref": ""
+          }
+        ]
+      }
+    },
+    "/viewAccDetailsAfterTran/{id}": {
+      "get": {
+        "description": "to view account balance after transaction By Id",
+        "responses": {
+          "200": {
+            "description": "successfully fetched account balance after transaction by Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                },
+                "example": {
+                  "id": 1,
+                  "account number": "123456987",
+                  "Updated Savings acc balance": "9500",
+                  "Updated Current acc balance": "00"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+

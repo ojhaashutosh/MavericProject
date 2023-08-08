@@ -1,0 +1,116 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Balance Module",
+    "description": "creating swagger.json for project",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/createBalance": {
+      "post": {
+        "description": "to get all balance details",
+        "responses": {
+          "200": {
+            "description": "successfully fetched balance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "Savings acc balance": {
+                        "type": "number"
+                      },
+                      "Current acc balance": {
+                        "type": "number"
+                      },
+                      "account number": "number"
+                    },
+                    "example": {
+                      "id": 1,
+                      "account number": "123456987",
+                      "Savings acc balance": "10000",
+                      "Current acc balance": "00"
+                    }
+                  }
+                }
+              }
+            },
+            "$ref": ""
+          }
+        }
+      }
+    },
+    "/updateAccountBalance": {
+      "patch": {
+        "description": "update user account balance by id",
+        "responses": {
+          "200": {
+            "description": "Update user account balance by id"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "int",
+            "format": "int"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array"
+            },
+            "example": {
+              "id": 1,
+              "account number": "123456987",
+              "Savings acc balance": "9500",
+              "Current acc balance": "00"
+            }
+          }
+        ]
+      }
+    },
+    "/viewBalanceDetails/{id}": {
+      "get": {
+        "description": "to view account balance details By Id",
+        "responses": {
+          "200": {
+            "description": "successfully fetched account balance details by Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                },
+                "example": {
+                  "id": 1,
+                  "account number": "123456987",
+                  "Savings acc balance": "9500",
+                  "Current acc balance": "00"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+

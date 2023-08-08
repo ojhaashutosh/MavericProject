@@ -1,0 +1,167 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "User Module",
+    "description": "creating swagger.json for project",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "description": "to get all users",
+        "responses": {
+          "200": {
+            "description": "successfully fetched all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "user_id": {
+                        "type": "number"
+                      },
+                      "aadhar_id": {
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "first_Name": {
+                        "type": "string"
+                      },
+                      "last_Name": {
+                        "type": "string"
+                      },
+                      "password": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "savingsAccountId": {
+                        "type": "number"
+                      },
+                      "currentAccountId": {
+                        "type": "number"
+                      }
+                    },
+                    "example": {
+                      "user_id": 1,
+                      "aadhar_id": "123456789012",
+                      "enabled": true,
+                      "first_Name": "rohith",
+                      "last_Name": "thakur",
+                      "password": "root",
+                      "phone": "1234567890",
+                      "username": "thakurs",
+                      "savingsAccountId": 123456,
+                      "currentAccountId": 345676
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id} ": {
+      "get": {
+        "description": "to get User By Id",
+        "responses": {
+          "200": {
+            "description": "successfully fetched User by Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                },
+                "example": {
+                  "user_id": 1,
+                  "aadhar_id": "123456789012",
+                  "enabled": true,
+                  "first_Name": "rohith",
+                  "last_Name": "thakur",
+                  "password": "root",
+                  "phone": "1234567890",
+                  "username": "thakurs",
+                  "savingsAccountId": 123456,
+                  "currentAccountId": 345676
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/updateUserDetails/{user_Id}": {
+      "patch": {
+        "description": "update user details by id",
+        "responses": {
+          "200": {
+            "description": "Update user details by id"
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array"
+            },
+            "example": {
+              "user_id": 1,
+              "aadhar_id": "123456789012",
+              "enabled": true,
+              "first_Name": "rohith",
+              "last_Name": "thakur",
+              "password": "root",
+              "phone": "1234567890",
+              "username": "thakurs",
+              "savingsAccountId": 123456,
+              "currentAccountId": 345676
+            }
+          }
+        ]
+      }
+    },
+    "/users/logout/{id}" : {
+      "get": {
+        "description": "to sign out the user",
+        "responses": {
+          "200": {
+            "description": "successfully signed out User by Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                },
+                "example": "user sign off complete"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
