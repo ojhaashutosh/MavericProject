@@ -1,16 +1,16 @@
 swagger: "2.0"
 info:
   description: "Maveric Project for Metro Bank"
-  version: 1.0.0
+  version: 1.0.1
   title: Swagger Metro Bank
 basePath: /MetroBank
 schemes:
   - http
 paths:
-  /add/newUser:
+  /user/add/newUser:
     post:
       tags:
-        - user module
+        - user
       summary: Create user
       description: "Adding new user to bank."
       operationId: createUser
@@ -27,10 +27,10 @@ paths:
       responses:
         default:
           description: successful operation
-  /getUser/{id}:
+  /user/get/{id}:
     get:
       tags:
-        - user module
+        - user
       summary: Get user by user name
       description: fetch user by id
       operationId: getUserByName
@@ -55,7 +55,7 @@ paths:
   /user/login:
     get:
       tags:
-        - user module
+        - user
       summary: Logs user into the system
       description: "login using credentials"
       operationId: loginUser
@@ -92,7 +92,7 @@ paths:
   /user/logout:
     get:
       tags:
-        - user module
+        - user
       summary: Logs out current logged in user session
       description: "logout from current session"
       operationId: logoutUser
@@ -103,30 +103,10 @@ paths:
       responses:
         default:
           description: successful operation
-  /account/createnewAcc :
-    post:
-      tags:
-        - Account module
-      summary: Create user
-      description: "Creating new account"
-      operationId: createAcc
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: Created account object
-          required: false
-          schema:
-            $ref: "#/definitions/Account"
-      responses:
-        default:
-          description: successful operation
   /account/UpdateAcc:
     get:
       tags:
-        - Account module
+        - Account
       summary: Updating account
       description: "to update account details"
       operationId: updateAcc
@@ -155,7 +135,7 @@ paths:
   /account/viewAcc/{id}:
     get:
       tags:
-        - Account module
+        - Account
       summary: To view account details
       description: "to view account details by id"
       operationId: viewAcc
@@ -177,30 +157,11 @@ paths:
           description: Invalid username supplied
         "404":
           description: User not found
-  /balance/createnewBal :
-    post:
-      tags:
-        - Balance module
-      summary: Create balance
-      description: "Creating new account"
-      operationId: createBal
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: Created account object
-          required: false
-          schema:
-            $ref: "#/definitions/Account"
-      responses:
-        default:
-          description: successful operation
+
   /balance/updateBal:
     get:
       tags:
-        - Balance module
+        - Balance
       summary: Updating balance
       description: "to update balance details"
       operationId: updateBal
@@ -231,7 +192,7 @@ paths:
   /balance/viewBal/{id}:
     get:
       tags:
-        - Balance module
+        - Balance
       summary: To view account details
       description: "to view account balance by id"
       operationId: viewBal
@@ -253,32 +214,11 @@ paths:
           description: Invalid username supplied
         "404":
           description: User not found
-  /transaction/create:
-    post:
-      tags:
-        - transaction module
-      summary: to initiate a transaction
-      description: "initiating a new transaction"
-      operationId: createTran
-      produces:
-        - application/xml
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: to make transfers
-          required: true
-          schema:
-            $ref: '#/definitions/Transaction'
-      responses:
-        "200":
-          description: successful operation
-          schema:
-            $ref: "#/definitions/Transaction"
+
   /transaction/update:
     get:
       tags:
-        - transaction module
+        - transaction
       summary: transaction object for update
       description: "update after new transaction is made"
       operationId: updateTran
@@ -305,7 +245,7 @@ paths:
   /transaction/viewBal/{id}:
     get:
       tags:
-        - transaction module
+        - transaction
       summary: To view trnsaction details
       description: "to view transaction by id"
       operationId: viewTran
