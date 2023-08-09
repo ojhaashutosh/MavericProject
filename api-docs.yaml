@@ -1,242 +1,397 @@
-openapi: 3.0.1
+swagger: "2.0"
 info:
-  title: OpenAPI definition
-  version: v0
-servers:
-- url: http://localhost:8080
-  description: Generated server url
+  description: "Maveric Project for Metro Bank"
+  version: 1.0.0
+  title: Swagger Metro Bank
+basePath: /MetroBank
+schemes:
+  - http
 paths:
-  /signUp:
+  /add/newUser:
     post:
       tags:
-      - consumer-controller
-      operationId: signUp
-      responses:
-        "200":
-          description: OK
-  /registerNewCustomer:
-    post:
-      tags:
-      - customer-controller
-      operationId: registerNewCustomer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/User'
-  /login:
-    post:
-      tags:
-      - consumer-controller
-      operationId: login
-      responses:
-        "200":
-          description: OK
-  /createTrans:
-    post:
-      tags:
-      - transaction-controller
-      operationId: createTransaction
-      responses:
-        "200":
-          description: OK
-  /createBalance/{id}:
-    post:
-      tags:
-      - balance-controller
-      operationId: createBalance
-      responses:
-        "200":
-          description: OK
-  /createAcc:
-    post:
-      tags:
-      - account-conrtoller
-      operationId: createAcc
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/CurrentAccount'
-  /updateUserDetails:
-    patch:
-      tags:
-      - consumer-controller
-      operationId: updateDetails
-      responses:
-        "200":
-          description: OK
-  /updateTrans/{id}:
-    patch:
-      tags:
-      - transaction-controller
-      operationId: UpdateTrans
-      responses:
-        "200":
-          description: OK
-  /updateBalance/{id}:
-    patch:
-      tags:
-      - balance-controller
-      operationId: UpdateBalance
-      responses:
-        "200":
-          description: OK
-  /updateAccDetails/{id}:
-    patch:
-      tags:
-      - account-conrtoller
-      operationId: updateAcc
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/User'
-  /accStatus/{accountId}:
-    patch:
-      tags:
-      - admin-controller
-      operationId: accStatus
-      responses:
-        "200":
-          description: OK
-  /viewTrans/{id}:
-    get:
-      tags:
-      - transaction-controller
-      operationId: viewTrans
-      responses:
-        "200":
-          description: OK
-  /viewBalanceby/{id}:
-    get:
-      tags:
-      - balance-controller
-      operationId: viewBalance
-      responses:
-        "200":
-          description: OK
-  /viewAccDetails/{id}:
-    get:
-      tags:
-      - account-conrtoller
-      operationId: viewAcc
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/User'
-  /users/{id}:
-    get:
-      tags:
-      - customer-controller
-      operationId: getById
+        - user module
+      summary: Create user
+      description: "Adding new user to bank."
+      operationId: createUser
+      produces:
+        - application/xml
+        - application/json
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - in: body
+          name: body
+          description: Created user object
+          required: false
+          schema:
+            $ref: "#/definitions/User"
       responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/User'
-  /signout:
+        default:
+          description: successful operation
+  /getUser/{id}:
     get:
       tags:
-      - consumer-controller
-      operationId: singOut
+        - user module
+      summary: Get user by user name
+      description: fetch user by id
+      operationId: getUserByName
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: "The User id that needs to be fetched. "
+          required: true
+          type: string
       responses:
         "200":
-          description: OK
-  /getUser/{Accountid}:
+          description: successful operation
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+  /user/login:
     get:
       tags:
-      - admin-controller
-      operationId: getDetails
+        - user module
+      summary: Logs user into the system
+      description: "login using credentials"
+      operationId: loginUser
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          type: string
       responses:
         "200":
-          description: OK
-  /getAllUsers:
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when toekn expires
+        "400":
+          description: Invalid username/password supplied
+  /user/logout:
     get:
       tags:
-      - admin-controller
-      operationId: getAllUsers
+        - user module
+      summary: Logs out current logged in user session
+      description: "logout from current session"
+      operationId: logoutUser
+      produces:
+        - application/xml
+        - application/json
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  /account/createnewAcc :
+    post:
+      tags:
+        - Account module
+      summary: Create user
+      description: "Creating new account"
+      operationId: createAcc
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created account object
+          required: false
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        default:
+          description: successful operation
+  /account/UpdateAcc:
+    get:
+      tags:
+        - Account module
+      summary: Updating account
+      description: "to update account details"
+      operationId: updateAcc
+      consumes:
+        - application/yaml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Account Object that need to be updated
+          required: false
+          schema:
+            $ref: "#/definitions/Account"
       responses:
         "200":
-          description: OK
-components:
-  schemas:
-    CurrentAccount:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        balance:
-          type: number
-          format: double
-        account_number:
-          type: integer
-          format: int32
-    SavingsAccount:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        balance:
-          type: number
-          format: double
-        account_number:
-          type: integer
-          format: int32
-    User:
-      type: object
-      properties:
-        user_id:
-          type: integer
-          format: int32
-        aadhar_id:
+          description: Success
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: User not found
+        "405":
+          description: Validation exception
+  /account/viewAcc/{id}:
+    get:
+      tags:
+        - Account module
+      summary: To view account details
+      description: "to view account details by id"
+      operationId: viewAcc
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: "The account id that needs to be fetched. "
+          required: true
           type: string
-        enabled:
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Account"
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+  /balance/createnewBal :
+    post:
+      tags:
+        - Balance module
+      summary: Create balance
+      description: "Creating new account"
+      operationId: createBal
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created account object
+          required: false
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        default:
+          description: successful operation
+  /balance/updateBal:
+    get:
+      tags:
+        - Balance module
+      summary: Updating balance
+      description: "to update balance details"
+      operationId: updateBal
+      consumes:
+        - application/yaml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Account Object that need to be updated
+          required: false
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: User not found
+        "405":
+          description: Validation exception
+
+
+  /balance/viewBal/{id}:
+    get:
+      tags:
+        - Balance module
+      summary: To view account details
+      description: "to view account balance by id"
+      operationId: viewBal
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: "The account id from where balance needs to be fetched. "
+          required: true
           type: string
-          format: byte
-        first_Name:
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Account"
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+  /transaction/create:
+    post:
+      tags:
+        - transaction module
+      summary: to initiate a transaction
+      description: "initiating a new transaction"
+      operationId: createTran
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: to make transfers
+          required: true
+          schema:
+            $ref: '#/definitions/Transaction'
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Transaction"
+  /transaction/update:
+    get:
+      tags:
+        - transaction module
+      summary: transaction object for update
+      description: "update after new transaction is made"
+      operationId: updateTran
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: to update after transaction
+          required: false
+          schema:
+            $ref: "#/definitions/Transaction"
+
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: User not found
+        "405":
+          description: Validation exception
+  /transaction/viewBal/{id}:
+    get:
+      tags:
+        - transaction module
+      summary: To view trnsaction details
+      description: "to view transaction by id"
+      operationId: viewTran
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: "The account id from where transaction details needs to be fetched. "
+          required: true
           type: string
-        last_Name:
-          type: string
-        password:
-          type: string
-        phone:
-          type: string
-        username:
-          type: string
-        savingsAccount:
-          $ref: '#/components/schemas/SavingsAccount'
-        currentAccount:
-          $ref: '#/components/schemas/CurrentAccount'
-        savingsAccountId:
-          type: integer
-          format: int32
-        currentAccountId:
-          type: integer
-          format: int32
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+
+definitions:
+  User:
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      firstName:
+        type: string
+        example: Ashu
+      lastName:
+        type: string
+        example: Ojha
+      aadharId:
+        type: string
+        example: SCHDAGVJ12
+      enabled:
+        type: integer
+        format: int32
+        description: User Status
+      email:
+        type: string
+        example: asdf@gmail.com
+      username:
+        type: string
+        example: asojha
+      password:
+        type: string
+        example: cvbj
+      phone:
+        type: string
+        example: 1234567890
+    xml:
+      name: User
+
+  Account:
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 1
+      account_balance:
+        type: integer
+        format: int128
+        example: 10000
+      account_number:
+        type: integer
+        format: int64
+        example: 123456
+
+  Transaction:
+    properties:
+      trantype:
+        type: string
+        example: credit
+      acctype:
+        type: string
+        example: savings
+      amount:
+        type: integer
+        format: int64
+        example: 500
+      updatedbal:
+        type: integer
+        format: int64
+        example: 10500
+
