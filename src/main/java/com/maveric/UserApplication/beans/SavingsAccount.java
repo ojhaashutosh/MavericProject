@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 @Entity
 public class SavingsAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "currentAccount_seq")
+    @SequenceGenerator(name = "currentAccount_seq", sequenceName = "currentAccount_sequence", initialValue = 2011200, allocationSize = 2)
     private int id;
     @Column(name = "balance")
     private double balance=0.0;
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "sequence")
     private int account_number;
     public SavingsAccount(){}
 

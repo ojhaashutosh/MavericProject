@@ -7,7 +7,9 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @Entity
 public class CurrentAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "currentAccount_seq")
+    @SequenceGenerator(name = "currentAccount_seq", sequenceName = "currentAccount_sequence", initialValue = 1011200, allocationSize = 1)
     private int id;
     @Column(name = "balance")
     private double balance = 0.0;
